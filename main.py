@@ -23,7 +23,7 @@ def eval_metrics(actual, pred):
 @click.option("--n_trees", default=200)
 @click.option("--learning_rate", default=0.005)
 def main(training_data, test_data, label_col, max_depth, n_trees, learning_rate):
-    trainDF = pd.read_csvt(training_data)
+    trainDF = pd.read_csv(training_data)
     testDF = pd.read_csv(test_data)
     yTrain = trainDF[[label_col]]
     XTrain = trainDF.drop([label_col], axis=1)
