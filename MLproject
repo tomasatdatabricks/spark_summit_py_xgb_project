@@ -2,7 +2,7 @@ conda_env: conda.yml
 
 entry_points:
   main:
-    command: python main.py --training_data {training_data} --test_data {test_data} --label_col {label_col} --max_dept {max_depth} --learning_rate {learning_rate} --n_trees {n_trees}
+    command: python main.py --training_data {training_data} --test_data {test_data} --label_col {label_col} --max_depth {max_depth} --learning_rate {learning_rate} --n_trees {n_trees}
     parameters:
       training_data: {type: string, default: "train.parquet"}
       test_data: {type: string, default: "test.parquet"} 
