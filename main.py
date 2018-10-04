@@ -7,12 +7,6 @@ import xgboost as xgb
 import mlflow
 import mlflow.sklearn
 
-def eval_metrics(actual, pred):
-    rmse = np.sqrt(mean_squared_error(actual, pred))
-    mae = mean_absolute_error(actual, pred)
-    r2 = r2_score(actual, pred)
-    return (rmse, mae, r2)
-
 
 @click.command()
 @click.option("--training_data")
@@ -47,7 +41,7 @@ def main(training_data, test_data, label_col, max_depth, n_trees, learning_rate)
     rmse = np.sqrt(mean_squared_error(yTrain, yPred))
     rmse_val = np.sqrt(mean_squared_error(yTest, yPredTest))
     mlflow.log_metric("rmse", rmse)
-    mlflow.log_metric("rmse_val", rmse_val)
+    mlflow.log_metric("val_rmse", rmse_val)
     mlflow.sklearn.log_model(pipeline, "model", conda_env="conda.yml")
 
 if __name__ == "__main__":
