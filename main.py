@@ -7,8 +7,6 @@ import xgboost as xgb
 import mlflow
 import mlflow.sklearn
 
-setwd("~/spark_summit_cwd/")
-
 def eval_metrics(actual, pred):
     rmse = np.sqrt(mean_squared_error(actual, pred))
     mae = mean_absolute_error(actual, pred)
