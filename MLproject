@@ -4,8 +4,8 @@ entry_points:
   main:
     command: python main.py --training_data {training_data} --test_data {test_data} --label_col {label_col} --max_depth {max_depth} --learning_rate {learning_rate} --n_trees {n_trees}
     parameters:
-      training_data: {type: string, default: "data/train.csv"}
-      test_data: {type: string, default: "data/test.csv"} 
+      training_data: {type: string, default: "train.csv"}
+      test_data: {type: string, default: "test.csv"} 
       label_col: {type: string, default: "price"}
       max_depth: {type: int, default: 5}
       learning_rate: {type: float, default: 1e-4}

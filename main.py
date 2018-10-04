@@ -9,12 +9,14 @@ import mlflow.sklearn
 
 
 @click.command()
+@click.option("--train")
+@click.option("--test")
 @click.option("--max_depth", default=5)
 @click.option("--n_trees", default=50)
 @click.option("--learning_rate", default=0.005)
-def main(max_depth, n_trees, learning_rate):
-    trainDF = pd.read_csv("data/train.csv")
-    testDF = pd.read_csv("data/test.csv")
+def main(train_data, test_data, max_depth, n_trees, learning_rate):
+    trainDF = pd.read_csv(train_data)
+    testDF = pd.read_csv(test_data)
     label_col = "price"
     yTrain = trainDF[[label_col]]
     XTrain = trainDF.drop([label_col], axis=1)
