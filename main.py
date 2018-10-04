@@ -7,6 +7,7 @@ import xgboost as xgb
 import mlflow
 import mlflow.sklearn
 
+setwd("~/spark_summit_cwd/")
 
 def eval_metrics(actual, pred):
     rmse = np.sqrt(mean_squared_error(actual, pred))
@@ -19,8 +20,8 @@ def eval_metrics(actual, pred):
 @click.option("--training_data")
 @click.option("--test_data")
 @click.option("--label_col")
-@click.option("--max_depth", default=7)
-@click.option("--n_trees", default=200)
+@click.option("--max_depth", default=5)
+@click.option("--n_trees", default=50)
 @click.option("--learning_rate", default=0.005)
 def main(training_data, test_data, label_col, max_depth, n_trees, learning_rate):
     trainDF = pd.read_csv(training_data)
@@ -43,24 +44,13 @@ def main(training_data, test_data, label_col, max_depth, n_trees, learning_rate)
     pipeline = Pipeline(steps=[("regressor", xgbRegressor)])
 
     pipeline.fit(XTrain, yTrain)
-    yPred = pipeline.predict(XTest)
-    
-    (rmse, mae, r2) = eval_metrics(yTest, yPred)
-    
-    print("XGBoost tree model (max_depth=%f, trees=%f, lr=%f):" % (max_depth, n_trees, learning_rate))
-    print("  RMSE: %s" % rmse)
-    print("  MAE: %s" % mae)
-    print("  R2: %s" % r2)
-    
-    mlflow.log_param("model", "XGBRegressor")
-    mlflow.log_param("max_depth", max_depth)
-    mlflow.log_param("n_trees", n_trees)
-    mlflow.log_param("learning_rate", learning_rate)
+    yPred = pipeline.predict(XTrain)
+    yPredTest = pipeline.predict(XTest)
+    rmse = np.sqrt(mean_squared_error(yTrain, yPred))
+    rmse_val = np.sqrt(mean_squared_error(yTest, yPredTest))
     mlflow.log_metric("rmse", rmse)
-    mlflow.log_metric("r2", r2)
-    mlflow.log_metric("mae", mae)    
+    mlflow.log_metric("rmse_val", rmse_val)
     mlflow.sklearn.log_model(pipeline, "model", conda_env="conda.yml")
-
 
 if __name__ == "__main__":
     main()
