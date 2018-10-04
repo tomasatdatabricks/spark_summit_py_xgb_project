@@ -2,9 +2,9 @@ conda_env: conda.yml
 
 entry_points:
   main:
-    command: python main.py --train {training_data} --test {test_data} --max_depth {max_depth} --learning_rate {learning_rate} --n_trees {n_trees}
+    command: python main.py --train-data {train_data} --test-data {test_data} --max_depth {max_depth} --learning_rate {learning_rate} --n_trees {n_trees}
     parameters:
-      training_data: {type: string, default: "train.csv"}
+      train_data: {type: string, default: "train.csv"}
       test_data: {type: string, default: "test.csv"} 
       label_col: {type: string, default: "price"}
       max_depth: {type: int, default: 5}

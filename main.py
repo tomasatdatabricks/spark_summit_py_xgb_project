@@ -9,8 +9,8 @@ import mlflow.sklearn
 
 
 @click.command()
-@click.option("--train")
-@click.option("--test")
+@click.option("--train-data")
+@click.option("--test-data")
 @click.option("--max_depth", default=5)
 @click.option("--n_trees", default=50)
 @click.option("--learning_rate", default=0.005)
